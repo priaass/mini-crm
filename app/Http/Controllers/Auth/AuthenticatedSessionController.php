@@ -27,13 +27,8 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
  
         $request->session()->regenerate();
- 
-        if ($request->user()->role == 'admin' || $request->user()->role == 'superadmin') {
-            return redirect('panel/dashboard');
-        }
- 
-        //return redirect()->intended(route('dashboard', absolute: false));
-        return redirect()->intended(route('dashboard'));
+
+        return redirect()->intended(route('companie.index'))->with('masuk', 'Berhasil Login');
     }
     /**
      * Destroy an authenticated session.
@@ -46,6 +41,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('auth/login');
+        return redirect('/')->with('status', 'Anda telah logout');
     }
 }

@@ -2,6 +2,7 @@
 @extends('layouts.content')
 
 @section('content')
+@if (Auth::user()->role == 'superadmin')
 <section class="section">
     <div class="d-flex gap-4">
         <div class="mt-1"><a href="{{ route('employee.index') }}" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a></div>
@@ -92,4 +93,10 @@
         </div>
     </div>
 </section>
+@else
+<script type="text/javascript">
+    alert('kamu adalah user');
+    window.location = "{{ route('employee.index') }}";
+</script>
+@endif
 @endsection

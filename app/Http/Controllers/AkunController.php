@@ -49,7 +49,7 @@ class AkunController extends Controller
             'password' => Hash::make($request->password),
         ]);
 
-        return redirect()->route('akun.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('akun.index')->with(['success' => 'Berhasil menambahkan akun!']);
     }
 
     
@@ -63,9 +63,9 @@ class AkunController extends Controller
     {
         //get product by ID
         $akun = User::findOrFail($id);
-
+        $roles = ['superadmin', 'admin', 'user'];
         //render view with product
-        return view('akun.edit', compact('akun'));
+        return view('akun.edit', compact('akun', 'roles'));
     }
         
     /**
@@ -79,9 +79,9 @@ class AkunController extends Controller
     {
         //validate form
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'role' => ['required', 'string', 'in:superadmin,admin,user'],
+            'name' => ['string', 'max:255', 'min:3'],
+            'email' => ['string', 'max:255', 'min:9'],
+            'role' => ['string', 'in:superadmin,admin,user'],
             'password' => [Rules\Password::defaults()],
         ]);
 
@@ -97,7 +97,7 @@ class AkunController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('akun.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('akun.index')->with(['success' => 'Berhasil mengubah akun!']);
     }
     
 
@@ -110,6 +110,6 @@ class AkunController extends Controller
         $akun->delete();
 
         //redirect to index
-        return redirect()->route('akun.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('akun.index')->with(['success' => 'Berhasil menghapus akun!']);
     }
 }

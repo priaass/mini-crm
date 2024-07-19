@@ -26,28 +26,27 @@
                       <label for="inputDivision" class="form-label">Division Name</label>
                       <input type="text" class="form-control" @error('division_namae') is-invalid @enderror name="name" value="{{ old('name_division', $division->name_division) }}" >
                             
-                      <!-- error message untuk name -->
                       @error('name')
                           <div class="alert alert-danger mt-2">
                               {{ $message }}
                           </div>
                       @enderror
                     </div>
+
                     <div class="col-12">
-                      <label for="inputEmployee" class="form-label">Employee</label>
-                      <select name="member_id" class="form-control">
-                        <option>Pilih Employee</option>
+                      <label for="employees">Select Employees</label>
+                      <div class="mt-2">
+                        <ul class="list-group">
                         @foreach ($employees as $employee)
-                            <option value="{{ $employee->id }}" @error('member_id') is-invalid @enderror>{{ $employee->first_name }} {{ $employee->last_name }} </option>
-                            <!-- error message untuk name -->
-                            @error('employees')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
+                        <li class="list-group-item">
+                            <input class="form-check-input" type="checkbox" name="employees[]" value="{{ $employee->id }}" id="employee{{ $employee->id }}" {{ in_array($employee->id, $division->employees->pluck('id')->toArray()) ? 'checked' : '' }}>
+                            <label class="form-check-label ms-1" for="employee{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</label>
+                        </li>
                         @endforeach
-                      </select>     
+                        </ul>
+                      </div>
                     </div>
+
                     <div class="mt-4">
                       <button type="submit" class="btn btn-primary">Submit</button>
                     </div>

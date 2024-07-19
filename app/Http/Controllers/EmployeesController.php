@@ -75,7 +75,7 @@ class EmployeesController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('employee.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('employee.index')->with(['success' => 'Employee berhasil ditambahkan!']);
     }
     
     /**
@@ -121,7 +121,7 @@ class EmployeesController extends Controller
         $request->validate([
             'first_name'    => 'required|string|min:2',
             'last_name'     => 'required|string|min:2',
-            'company'       => 'required|exists:companies,id',
+            'company'       => 'exists:companies,id',
             'email'         => 'required|string|min:5',
             'phone'         => 'required|string|regex:/^[0-9]{9,20}$/'
         ]);
@@ -129,18 +129,17 @@ class EmployeesController extends Controller
         //get product by ID
         $employees = Employees::findOrFail($id);
 
-        ///update product without image
-            $employees->update([
-                'first_name'=> $request->first_name,
-                'last_name'=> $request->last_name,
-                'company'=> $request->company,
-                'email'=> $request->email,
-                'phone'=> $request->phone
-            ]);
+        $employees->update([
+            'first_name'=> $request->first_name,
+            'last_name'=> $request->last_name,
+            'company'=> $request->company,
+            'email'=> $request->email,
+            'phone'=> $request->phone
+        ]);
         
 
         //redirect to index
-        return redirect()->route('employee.index')->with(['success' => 'Data Berhasil Diubah!']);
+        return redirect()->route('employee.index')->with(['success' => 'Employee berhasil diubah!']);
     }
     
     /**
@@ -158,7 +157,7 @@ class EmployeesController extends Controller
         $employees->delete();
 
         //redirect to index
-        return redirect()->route('employee.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('employee.index')->with(['success' => 'Employee berhasil dihapus!']);
     }
 
     

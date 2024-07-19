@@ -1,28 +1,39 @@
 @extends('layouts.content')
 
 @section('content')
-    <div class="container mt-5 mb-5">
-        <button class="btn btn-success mb-3">
-            <a href="/" class="text-decoration-none text-light">Kembali</a>
-        </button>   
-        <div class="row">
-            <div class="col-md-4">
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-body">
-                        
-                    </div>
+<div class="d-flex gap-4">
+    <div class="mt-1"><a href="{{ route('division.index') }}" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a></div>
+<div class="pagetitle mt-3">
+    <h1>Dashboard</h1>
+    <nav>
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/division/">Division</a></li>
+        <li class="breadcrumb-item active">Show</li>
+    </ol>
+    </nav>
+</div>
+</div>
+<div class="row">
+    <div class="card py-4">
+        <div class="card-body">
+            <h1 class="mb-4">Division - {{ $division->id }}</h1>
+            <form class="row g-3">
+                <div class="col-12">
+                  <label class="form-label">Name Division</label>
+                  <input class="form-control" value="{{ $division->name_division }}" readonly>
                 </div>
-            </div>
-            <div class="col-md-8">
-                <div class="card border-0 shadow-sm rounded">
-                    <div class="card-body">
-                        <h3>{{ $division->first_name }}</h3>
-                        <hr/>
-                        <h3>{{ $division->last_name }}</h3>
-                        <hr/>
-                    </div>
+                <div class="col-12">
+                    <label class="form-label">Employees</label>          
+                    <ul class="list-group list-group-numbered">
+                    @forelse ($division->employees as $employee)
+                        <li class="list-group-item">{{ $employee->first_name }} {{ $employee->last_name }}</li>
+                    @empty
+                        <input class="form-control" value="Tidak ada employee" readonly>
+                    @endforelse
+                    </ul>
                 </div>
-            </div>
+            </form>
         </div>
     </div>
+</div>
 @endsection

@@ -47,12 +47,11 @@
                     <div class="col-12">
                       <label for="inputCompany" class="form-label">Company</label>
 
-                      <select name="company" class="form-control @error('company') is-invalid @enderror">
+                    <select name="company" class="form-control @error('company') is-invalid @enderror">
                         <option value="">Pilih Company</option>
                         @foreach ($companies as $companie)
                             <option value="{{ $companie->id }}" {{ old('company', $employees->company_id) == $companie->id ? 'selected' : '' }}>{{ $companie->name }}</option>
                         @endforeach
-                    </select>
                     </select>
                             
                     </div>

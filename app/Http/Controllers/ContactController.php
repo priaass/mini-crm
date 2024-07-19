@@ -20,6 +20,7 @@ class ContactController extends Controller
 
     public function index(): View
     {
+        $contact = Contact::all();
         $contact = Contact::oldest()->get();
         return view('contact.admin', compact('contact'));
     }
@@ -58,13 +59,16 @@ class ContactController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('contact.create')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('contact.create')->with(['success' => 'Message berhasil dikirim!']);
     }
     
-    /**
-     * show
-     *
-     * @param  mixed $id
-     * @return View
-     */
+    public function destroy($id)
+    {
+        $contact = Contact::findOrFail($id);
+
+        $contact->delete();
+
+        return redirect()->route('contact.admin')->with(['success' => 'Message berhasil dihapus!']);
+
+    }
 }

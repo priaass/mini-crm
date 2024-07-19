@@ -2,9 +2,10 @@
 @extends('layouts.content')
 
 @section('content')
+@if (Auth::user()->role != 'user')
 <section class="section">
     <div class="d-flex gap-4">
-        <div class="mt-1"><a href="" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a></div>
+        <div class="mt-1"><a href="/akun" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a></div>
     <div class="pagetitle mt-3">
         <h1>Dashboard</h1>
         <nav>
@@ -35,8 +36,10 @@
                       <label for="inputName" class="form-label">Role</label>
                       <select name="role" id="role" class="form-control">
                         <option>Plih Role</option>
+                        @if (Auth::user()->role == 'superadmin')
                         <option value="superadmin">Superadmin</option>
                         <option value="admin">Admin</option>
+                        @endif
                         <option value="user">User</option>
                       </select>
                       {{-- <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" required autofocus autocomplete="name">   --}}
@@ -86,4 +89,10 @@
         </div>
     </div>
 </section>
+@else
+<script type="text/javascript">
+    alert('kamu adalah user');
+    window.location = "{{ route('companie.index') }}";
+</script>
+@endif
 @endsection

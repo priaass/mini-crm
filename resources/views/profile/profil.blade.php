@@ -102,58 +102,50 @@
                   @csrf
                   @method('put')
                   <div class="row mb-3">
-                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input id="update_password_current_password" name="current_password" type="password" type="password" class="form-control" autocomplete="current-password">
-                      <?php if ($errors->updatePassword->has('password_confirmation')): ?>
-                      <div class="mt-2">
-                          <span class="text-red-500"><?= $errors->updatePassword->first('current_password') ?></span>
-                      </div>
-                      <?php endif ?>
-                    </div>
-                  </div>
+                      <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                      <div class="col-md-8 col-lg-9">
+                          <input id="update_password_current_password" name="current_password" type="password" class="form-control" autocomplete="current-password">
 
+                          @error('current_password')
+                          <div class="alert alert-danger mt-2">
+                              {{ $message }}
+                          </div>
+                          @enderror
+                          
+                      </div>
+                  </div>
+              
                   <div class="row mb-3">
-                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input id="update_password_password" name="password" type="password" class="form-control" autocomplete="new-password ">
-                      <?php if ($errors->updatePassword->has('password_confirmation')): ?>
-                      <div class="mt-2">
-                          <span class="text-red-500"><?= $errors->updatePassword->first('password') ?></span>
+                      <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                          <input id="update_password_password" name="password" type="password" class="form-control" autocomplete="new-password">
+                          
+                          @error('password')
+                          <div class="alert alert-danger mt-2">
+                              {{ $message }}
+                          </div>
+                          @enderror
                       </div>
-                      <?php endif ?>
-                    </div>
                   </div>
-
+              
                   <div class="row mb-3">
-                    <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
-                    <div class="col-md-8 col-lg-9">
-                      <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="new-password">
-                      <?php if ($errors->updatePassword->has('password_confirmation')): ?>
-                      <div class="mt-2">
-                          <span class="text-red-500"><?= $errors->updatePassword->first('password_confirmation') ?></span>
+                      <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
+                      <div class="col-md-8 col-lg-9">
+                          <input id="update_password_password_confirmation" name="password_confirmation" type="password" class="form-control" autocomplete="new-password">
+                          
+                          @error('password_confirmation')
+                          <div class="alert alert-danger mt-2">
+                              {{ $message }}
+                          </div>
+                          @enderror
                       </div>
-                      <?php endif ?>
-                    </div>
                   </div>
-
+              
                   <div class="text-end">
-                    <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-primary">Change Password</button>
                   </div>
-
-                  <?php if (session('status') === 'password-updated'): ?>
-                    <p id="statusMessage" class="text-sm text-gray-600"><?= __('Saved.') ?></p>
-                    <script>
-                        document.addEventListener('DOMContentLoaded', function () {
-                            var statusMessage = document.getElementById('statusMessage');
-                            setTimeout(function () {
-                                statusMessage.style.display = 'none';
-                            }, 2000);
-                        });
-                    </script>
-                  <?php endif; ?>
-
-                </form><!-- End Change Password Form -->
+              </form>
+              <!-- End Change Password Form -->
 
               </div>
 
@@ -165,4 +157,36 @@
       </div>
     </div>
   </section>
+  
+  
+
+@if(session('status'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Sukses!',
+            showConfirmButton: false,
+            timer: 1500,
+            text: '{{ session('status') }}'
+        });
+    });
+</script>
+@endif
+
+@if (session('status') === 'password-updated')
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        Swal.fire({
+            icon: 'success',
+            title: 'Password Updated!',
+            text: 'Password berhasil diubah!',
+            showConfirmButton: false,
+            timer: 2000
+        });
+    });
+</script>
+@endif
+
+
 @endsection

@@ -19,9 +19,9 @@ Route::get('contact', function () {
     return view('contact');
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.profil');
@@ -30,7 +30,10 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('panel/dashboard', [HomeController::class, 'index']);
+    Route::resource('/companie', CompanieController::class);
+    Route::resource('/employee', EmployeesController::class);
+    Route::resource('/division', DivisionsController::class);
+    // Route::get('companie/index', [HomeController::class, 'index']);
     
     // Route::get('akun', [AkunCon  troller::class, 'create'])
     // ->name('akun');
@@ -42,17 +45,15 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('/akun', AkunController::class);
 });
 
-Route::get('/redirect-dashboard', function() {
-    $user = Auth::user(); //ambil info pengguna
-    if ($user->role == 'admin' || $user->role == 'superadmin') {
-        return redirect('panel.dashboard');
-    } else {
-        return redirect('dashboard');
-    }
-})->name('dashboard.redirect');
+// Route::get('/redirect-dashboard', function() {
+//     $user = Auth::user(); //ambil info pengguna
+//     if ($user->role == 'admin' || $user->role == 'superadmin') {
+//         return redirect('panel.dashboard');
+//     } else {
+//         return redirect('dashboard');
+//     }
+// })->name('dashboard.redirect');
 
-Route::resource('/companie', CompanieController::class);
-Route::resource('/employee', EmployeesController::class);
-Route::resource('/division', DivisionsController::class);
+
 
 require __DIR__.'/auth.php';

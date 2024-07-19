@@ -13,44 +13,33 @@
         </nav>
     </div><!-- End Page Title -->
     </div>
-    <div class="container"> 
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card border-1 shadow-sm rounded">
-                    <div class="card-body">
-                        <table>
-                            <h2 class="text-center my-3 fw-bold">Profile Employee</h2>
-                            <tr>
-                                <td><h4>First name</h4></td>
-                                <td>: {{ $employees->first_name }}</td>
-                            </tr>
-                            <tr>
-                                <td><h4>Last name</h4></td>
-                                <td>: {{ $employees->last_name }}</td>
-                            </tr>
-                            <tr>
-                                <td><h4>Email</h4></td>
-                                <td>: {{ $employees->email }}</td>
-                            </tr>
-                            <tr>
-                                <td><h4>Companie</h4></td>
-                                <td>: {{ $employees->company->name }}</td>
-                            </tr>
-                            <tr>
-                                <td><h4>Phone</h4></td>
-                                <td>: {{ $employees->phone }}</td>
-                            </tr>
-                            
-                        </table>
-                        {{-- <h4>Last name   : {{ $employees->last_name }}</h4>
-                        <hr/>
-                        <h4>Companie    : {{ $employees->company->name }}</h4>
-                        <hr/>
-                        <h4>Email       : {{ $employees->email }}</h4>
-                        <hr/>
-                        <h4>Phone       : {{ $employees->phone }}</h4> --}}
+    <div class="row">
+        <div class="card py-4">
+            <div class="card-body">
+                <h1 class="mb-4">Employee - {{ $employees->id }}</h1>
+                <form class="row g-3" method="post" action="{{ route('employee.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="col-12">
+                      <label for="inputNanme4" class="form-label">Name</label>
+                      <input type="text" class="form-control" value="{{ $employees->first_name }} {{ $employees->last_name }}" readonly>
                     </div>
-                </div>
+                    <div class="col-12">
+                      <label for="inputNanme4" class="form-label">Company</label>
+                      <input type="text" class="form-control" value="{{ $employees->company ? $employees->company->name : 'Tidak ada company' }}" readonly>
+                    </div>
+                    <div class="col-12">
+                      <label for="inputNanme4" class="form-label">Email</label>
+                      <input type="text" class="form-control" value="{{ $employees->email }}" readonly>
+                    </div>
+                    <div class="col-12">
+                      <label for="inputNanme4" class="form-label">Phone</label>
+                      <input type="text" class="form-control" value="{{ $employees->phone }}" readonly>
+                    </div>
+                    <div class="col-12">
+                      <label for="inputNanme4" class="form-label">Divisi</label>
+                      <input type="text" class="form-control" value="{{ $employees->division ? $employees->division->name_division : 'Tidak ada divisi' }}" readonly>
+                    </div>
+                </form><!-- Vertical Form -->
             </div>
         </div>
     </div>

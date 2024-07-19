@@ -16,12 +16,12 @@ return new class extends Migration
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
-            $table->foreignId('company_id')->constrained('companies');
+            $table->unsignedBigInteger('company_id')->nullable();
             $table->string('email');
             $table->string('phone');
             $table->timestamps();
-
-            // $table->foreignId('company_id')->references('id')->on('companies')->onDelete('cascade');
+            
+            $table->foreign('company_id')->references('id')->on('companies')->onDelete('set null');
         });
     }
 

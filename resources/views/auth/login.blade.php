@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+  <title>Login Mini CRM</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -30,6 +30,8 @@
   <!-- Template Main CSS File -->
   <link href="../../css/style.css" rel="stylesheet">
 
+    {{-- Sweet alert --}}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- =======================================================
   * Template Name: NiceAdmin
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -37,15 +39,11 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
-</head>
-
-<body>
+</head>        
+<body>   
 
   <main>
     <div class="container">
-        @if (session('status'))
-            <div class="mb-4">{{ session('status') }}</div>
-        @endif
         <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
             <div class="row justify-content-center">
@@ -66,14 +64,22 @@
                             <label for="yourUsername" class="form-label">Username</label>
                             <div class="input-group has-validation">
                             <input class="form-control" id="email" type="email" name="email" value="{{ old('email') }}" required autofocus autocomplete="username">
-                            <div class="invalid-feedback">Please enter your email.</div>
+                            @error('email')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                             </div>
                         </div>
 
                         <div class="col-12">
                             <label for="yourPassword" class="form-label">Password</label>
                             <input class="form-control" type="password" id="password" name="password" value="{{ old('password') }}" required autofocus autocomplete="current-password">
-                            <div class="invalid-feedback">Please enter your password!</div>
+                            @error('password')
+                                <div class="alert alert-danger mt-2">
+                                    {{ $message }}
+                                </div>
+                            @enderror
                         </div>
 
                         <div class="col-12">
@@ -113,6 +119,23 @@
 
 <!-- Template Main JS File -->
 <script src="../../js/main.js"></script>
+
+{{-- Sweet alert --}}
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if(session('status'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'info',
+                title: 'Sukses!',
+                showConfirmButton: false,
+                timer: 1500,
+                text: '{{ session('status') }}'
+            });
+        });
+    </script>
+@endif
 
 </body>
 

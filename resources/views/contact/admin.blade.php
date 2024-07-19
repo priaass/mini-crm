@@ -1,5 +1,6 @@
 @extends('layouts.content')
 @section('content')
+@if (Auth::user()->role == 'superadmin')
 <section class="section">
   <div class="row">
     <div class="col-lg-12">
@@ -37,4 +38,20 @@
 
   </div>
 </section>
+@else
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+      Swal.fire({
+          icon: 'error',
+          title: 'Gagal!',
+          showConfirmButton: false,
+          timer: 2000,
+          text: 'Kamu adalah user!'
+      }).then(() => {
+          window.location = "{{ route('contact.create') }}";
+      });
+  });
+</script>
+
+@endif
 @endsection

@@ -24,7 +24,7 @@
                     @method('PUT')
                     <div class="col-6">
                       <label for="inputName" class="form-label">Name</label>
-                      <input type="text" class="form-control" name="name" id="name" value="{{ $akun->name }}" required autofocus autocomplete="name">  
+                      <input type="text" class="form-control" name="name" id="name" value="{{ old('name', $akun->name) }}" required autofocus autocomplete="name">  
                         @error('name')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
@@ -33,14 +33,14 @@
                     </div>
 
                     <div class="col-6">
-                      <label for="inputName" class="form-label">Role</label>
+                      <label for="inputRole" class="form-label">Role</label>
                       <select name="role" id="role" class="form-control">
                         <option>Plih Role</option>
-                        <option value="admin">Admin</option>
-                        <option value="superadmin">Superadmin</option>
-                        <option value="user">User</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role }}" {{ $akun->role == $role ? 'selected' : '' }}>{{ ucfirst($role) }}</option>
+                        @endforeach
                       </select>
-                      {{-- <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" required autofocus autocomplete="name">   --}}
+
                         @error('role')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
@@ -50,7 +50,7 @@
 
                     <div class="col-12">
                       <label for="inputEmail" class="form-label">Email</label>
-                      <input type="email" class="form-control" name="email" id="email" value="{{ $akun->email }}">
+                      <input type="email" class="form-control" name="email" id="email" value="{{ old('email', $akun->email) }}">
                         @error('email')
                             <div class="alert alert-danger mt-2">
                                 {{ $message }}
@@ -60,12 +60,12 @@
 
                     <div class="col-12">
                       <label for="inputNanme4" class="form-label">Password</label>
-                      <input type="password" class="form-control" name="password" id="password" value="{{ old('password') }}">
+                      <input type="password" class="form-control" name="password" id="password">
                     </div>
 
                     <div class="col-12">
                         <label for="inputNanme4" class="form-label">Confirm Password</label>
-                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation" value="{{ old('password_confirmation') }}"  >
+                        <input type="password" class="form-control" name="password_confirmation" id="password_confirmation">
                     </div>
                         
                         

@@ -73,7 +73,7 @@ class CompanieController extends Controller
         ]);
 
         //redirect to index
-        return redirect()->route('companie.index')->with(['success' => 'Data Berhasil Disimpan!']);
+        return redirect()->route('companie.index')->with(['success' => 'Companie berhasil ditambahkan!']);
     }
     
     /**
@@ -120,7 +120,7 @@ class CompanieController extends Controller
         $request->validate([
             'name'      => 'required|min:2',
             'email'     => 'required|min:5',
-            'logo'      => 'required|image|mimes:jpeg,jpg,png|max:10000',
+            'logo'      => 'image|mimes:jpeg,jpg,png|max:10000',
             'website'   => 'required|min:5',
         ]);
 
@@ -130,39 +130,31 @@ class CompanieController extends Controller
         //check if image is uploaded
         if ($request->hasFile('logo')) {
 
-            // $image = Image::make($logo);
-            // $image->fit(500, 500, function ($constraint) {
-            // $constraint->aspectRatio();
-            // $constraint->upsize();
-            // });
-
-            //upload new image
+            // Upload new image
             $image = $request->file('logo');
             $image->storeAs('public/logo', $image->hashName());
-
-            //delete old image
-            Storage::delete('public/logo/'.$companies->image);
-
-            //update product with new image
+    
+            // Delete old image if exists
+            Storage::delete('public/logo/' . $companies->logo);
+    
+            // Update company with new image
             $companies->update([
-                'name'=> $request->name,
-                'email'=> $request->email,
-                'logo'=> $image->hashName(),
-                'website'=> $request->website,
+                'name' => $request->name,
+                'email' => $request->email,
+                'logo' => $image->hashName(),
+                'website' => $request->website,
             ]);
-
         } else {
-
-            //update product without image
+            // Update company without changing image
             $companies->update([
-                'name'=> $request->name,
-                'email'=> $request->email,
-                'website'=> $request->website,
+                'name' => $request->name,
+                'email' => $request->email,
+                'website' => $request->website,
             ]);
         }
-
-        //redirect to index
-        return redirect()->route('companie.index')->with(['success' => 'Data Berhasil Diubah!']);
+    
+        // Redirect to index
+        return redirect()->route('companie.index')->with(['success' => 'Companie berhasil diubah!']);
     }
     
     /**
@@ -177,12 +169,12 @@ class CompanieController extends Controller
         $companies = Companies::findOrFail($id);
 
         //delete image
-        Storage::delete('public/logo/'. $companies->image);
+        Storage::delete('public/logo/'. $companies->logo);
 
         //delete product
         $companies->delete();
 
         //redirect to index
-        return redirect()->route('companie.index')->with(['success' => 'Data Berhasil Dihapus!']);
+        return redirect()->route('companie.index')->with(['success' => 'Companie berhasil dihapus!']);
     }
 }

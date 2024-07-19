@@ -1,6 +1,7 @@
 @extends('layouts.content')
 
 @section('content')
+@if (Auth::user()->role == 'user')
 <section class="section">
     <div class="col-xl-12">
         <div class="card p-4">
@@ -43,5 +44,32 @@
       </div>
 </section>
 
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses!',
+                showConfirmButton: false,
+                timer: 1500,
+                text: '{{ session('success') }}'
+            });
+        });
+    </script>
+@endif
 
+@else
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                showConfirmButton: false,
+                timer: 1500,
+                text: 'Kamu adalah user!'
+            });
+        });
+        window.location = "{{ route('contact.admin') }}";
+    </script>
+@endif
 @endsection

@@ -27,17 +27,17 @@
                               <td>{{ $a->email }}</td>
                               <td>{{ $a->role }}</td>
                               <td class="text-center">
-                                  <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('akun.destroy', $a->id) }}" method="POST">
+                                  <form id="delete-form-{{ $a->id }}" action="{{ route('akun.destroy', $a->id) }}" method="POST">
                                       <a href="{{ route('akun.edit', $a->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                       @csrf
                                       @method('DELETE')
-                                      <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                      <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $a->id }})">HAPUS</button>
                                   </form>
                               </td>
                           </tr>
                       @empty
                           <div class="alert alert-danger">
-                              Data Companies belum Tersedia.
+                            Superadmin belum tersedia.
                           </div>
                       @endforelse
                   </tbody>
@@ -64,17 +64,17 @@
                               <td>{{ $a->email }}</td>
                               <td>{{ $a->role }}</td>
                               <td class="text-center">
-                                  <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('akun.destroy', $a->id) }}" method="POST">
+                                  <form id="delete-form-{{ $a->id }}" action="{{ route('akun.destroy', $a->id) }}" method="POST">
                                       <a href="{{ route('akun.edit', $a->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                       @csrf
                                       @method('DELETE')
-                                      <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                      <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $a->id }})">HAPUS</button>
                                   </form>
                               </td>
                           </tr>
                       @empty
                           <div class="alert alert-danger">
-                              Data Companies belum Tersedia.
+                            Admin belum tersedia.
                           </div>
                       @endforelse
                   </tbody>
@@ -100,17 +100,17 @@
                               <td>{{ $a->email }}</td>
                               <td>{{ $a->role }}</td>
                               <td class="text-center">
-                                  <form onsubmit="return confirm('Apakah Anda Yakin ?');" action="{{ route('akun.destroy', $a->id) }}" method="POST">
+                                  <form id="delete-form-{{ $a->id }}" action="{{ route('akun.destroy', $a->id) }}" method="POST">
                                       <a href="{{ route('akun.edit', $a->id) }}" class="btn btn-sm btn-primary">EDIT</a>
                                       @csrf
                                       @method('DELETE')
-                                      <button type="submit" class="btn btn-sm btn-danger">HAPUS</button>
+                                      <button type="button" class="btn btn-sm btn-danger" onclick="confirmDelete({{ $a->id }})">HAPUS</button>
                                   </form>   
                               </td>
                           </tr>
                       @empty
                           <div class="alert alert-danger">
-                              Data Companies belum Tersedia.
+                            User belum tersedia.
                           </div>
                       @endforelse
                   </tbody>
@@ -120,4 +120,37 @@
       </div>
   </div>
 </div>
+
+<script>
+    function confirmDelete(id) {
+        Swal.fire({
+            title: 'Apakah Anda Yakin?',
+            text: "Data akun yang dihapus tidak dapat dikembalikan!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ya, hapus!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('delete-form-' + id).submit();
+            }
+        })
+    }
+</script>
+
+
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sukses!',
+                showConfirmButton: false,
+                timer: 1500,
+                text: '{{ session('success') }}'
+            });
+        });
+    </script>
+@endif
 @endsection

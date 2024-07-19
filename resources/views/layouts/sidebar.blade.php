@@ -32,8 +32,9 @@
           <span>Profile</span>
         </a>
       </li><!-- End Profile Page Nav -->
+      @if (Auth::user()->role != 'admin')
       <li class="nav-item">
-        @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin')
+        @if (Auth::user()->role == 'superadmin')
         <a class="nav-link collapsed" href="{{ route('contact.index') }}">
         @elseif (Auth::user()->role == 'user')
         <a class="nav-link collapsed" href="{{ route('contact.create') }}">
@@ -42,6 +43,7 @@
           <span>Contact</span>
         </a>
       </li><!-- End Contact Page Nav -->
+      @endif
       @if (Auth::user()->role == 'superadmin' || Auth::user()->role == 'admin')
       <li class="nav-item">
         <a class="nav-link collapsed" href="{{ route('akun.index') }}">

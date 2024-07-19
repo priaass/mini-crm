@@ -2,6 +2,7 @@
 @extends('layouts.content')
 
 @section('content')
+@if (Auth::user()->role == 'superadmin')
 <section class="section">
     <div class="d-flex gap-4">
       <div class="mt-1"><a href="{{ route('division.index') }}" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a>
@@ -24,7 +25,7 @@
                     @csrf
                     <div class="col-12">
                       <label for="inputDivision" class="form-label">Division Name</label>
-                      <input type="text" class="form-control" @error('division_name') is-invalid @enderror name="name">
+                      <input type="text" class="form-control" @error('name_division') is-invalid @enderror name="name">
                             
                       <!-- error message untuk name -->
                       @error('name')
@@ -34,19 +35,20 @@
                       @enderror
                     </div>
                     <div class="col-12">
-                      <label for="inputEmployee" class="form-label">Employee</label>
-                      <select name="member_id" class="form-control">
-                        <option>Pilih Employee</option>
-                        @foreach ($employees as $employee)
-                            <option value="{{ $employee->id }}" @error('member_id') is-invalid @enderror>{{ $employee->first_name }} {{ $employee->last_name }} </option>
-                            <!-- error message untuk name -->
-                            @error('employees')
-                                <div class="alert alert-danger mt-2">
-                                    {{ $message }}
-                                </div>
-                            @enderror
-                        @endforeach
-                      </select>     
+                      <label for="employees">Select Employees</label>
+                      @foreach ($employees as $employee)
+                          <div class="mt-2">
+                            <ul class="list-group">
+                              <li class="list-group-item">
+                                <input class="form-check-input" type="checkbox" name="employees[]" value="{{ $employee->id }}" id="employee{{ $employee->id }}">
+                                <label class="form-check-label ms-1" for="employee{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</label>
+                                
+                              </li>
+                            </ul>
+                              {{-- <input type="checkbox" class="form-check-input" name="employees[]" value="{{ $employee->id }}" id="employee{{ $employee->id }}">
+                              <label class="form-check-label" for="employee{{ $employee->id }}">{{ $employee->first_name }} {{ $employee->last_name }}</label> --}}
+                          </div>
+                      @endforeach
                     </div>
                     <div class="mt-4">
                       <button type="submit" class="btn btn-primary">Submit</button>
@@ -56,4 +58,10 @@
         </div>
     </div>
 </section>
+@else
+<script type="text/javascript">
+    alert('kamu adalah user');
+    window.location = "{{ route('division.index') }}";
+</script>
+@endif
 @endsection

@@ -9,9 +9,6 @@
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  {{-- <link href="../../img/favicon.png"   "> --}}
-  {{-- <link href="../../img/apple-touch-icon.png" rel="apple-touch-icon"> --}}
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -26,6 +23,8 @@
   <link href="../../vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="../../vendor/simple-datatables/style.css" rel="stylesheet">
 
+  {{-- Sweet alert --}}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
   <!-- Template Main CSS File -->
   <link href="../../css/style.css" rel="stylesheet">
   @yield('style')
@@ -59,6 +58,9 @@
     <!-- Template Main JS File -->
     <script src="../../js/main.js"></script>
     @yield('script')
+
+    {{-- Sweet alert --}}
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 </body>
 

@@ -1,6 +1,7 @@
 @extends('layouts.content')
 
 @section('content')
+@if (Auth::user()->role == 'superadmin')
 <section class="section">
     <div class="d-flex gap-4">
         <div class="mt-1"><a href="{{ route('companie.index') }}" class="bi bi-arrow-left-circle text-black" style="font-size: 3.1rem"></a></div>
@@ -45,14 +46,8 @@
                     </div>
                     <div class="col-12">
                       <label for="inputLogo" class="form-label">Logo</label>
-                      <input type="file" class="form-control" @error('logo') is-invalid @enderror name="logo" value="{{ old('logo', $companies->logo) }}" >
-                            
-                      <!-- error message untuk name -->
-                      @error('logo')
-                          <div class="alert alert-danger mt-2">
-                              {{ $message }}
-                          </div>
-                      @enderror
+                      <input type="file" class="form-control" name="logo" value="{{ old('logo', $companies->logo) }}" >
+
                     </div>
                     <div class="col-12">
                       <label for="inputWebsite" class="form-label">Website</label>
@@ -75,4 +70,10 @@
         </div>
     </div>
 </section>
+@else
+<script type="text/javascript">
+    alert('kamu adalah user');
+    window.location = "{{ route('companie.index') }}";
+</script>
+@endif
 @endsection
